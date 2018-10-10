@@ -34,11 +34,11 @@ public class MessageTask extends AsyncTask<Void, Void, Boolean> {
         //retrieve messages and parse
 
 
-
+        return null;
     }
 
-    @Override
-    protected void onPostExecute(final List<String> message) {
-        listener.retrieveMessage(message);
-    }
+    //@Override
+    //protected void onPostExecute(final List<String> message) {
+    // listener.retrieveMessage(message);
+    //}
 }
