@@ -1,12 +1,9 @@
 package com.cpe.chat;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity  extends AppCompatActivity implements View.OnClickListener {
     ProgressBar progressBar;
@@ -80,7 +76,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "registration complete", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
+                    startActivity(new Intent(LoginActivity.this, ProfileUserActivity.class));
                 } else {
 
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
@@ -135,8 +131,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Toast.makeText(getApplicationContext(), "Sign in success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
-                        FirebaseUser user = mAuth.getCurrentUser();
+                        startActivity(new Intent(LoginActivity.this, ProfileUserActivity.class));
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -144,6 +139,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
 
                         Toast.makeText(getApplicationContext(), "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
 
                     }
                 }
