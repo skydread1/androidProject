@@ -41,6 +41,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.email_sign_up_button).setOnClickListener(this);
     }
 
+    //email and password conformity tests
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -64,49 +65,43 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         }
 
         if (password.length() < 6) {
-            editTextPassword.setError("Minimum lenght of password should be 6");
+            editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
 
+        //create user
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
-                    finish();
+                    Toast.makeText(LoginActivity.this, "registration complete", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
-                } else {
+                }
+                else {
 
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        if(task.getException() instanceof FirebaseAuthUserCollisionException){
-                            Toast.makeText(LoginActivity.this, "You are already registered", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-
-
+                        Toast.makeText(LoginActivity.this, "registration error", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });
 
+        //sign in
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            finish();
-                            startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(getApplicationContext(), "Sign in success", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
                             FirebaseUser user = mAuth.getCurrentUser();
 
                         } else {
