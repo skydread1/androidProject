@@ -41,11 +41,12 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.email_sign_up_button).setOnClickListener(this);
     }
 
-    //email and password conformity tests
+    //CREATE USER
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        //email and password conformity tests
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
@@ -73,15 +74,14 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         progressBar.setVisibility(View.VISIBLE);
 
         //create user
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "registration complete", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
-                }
-                else {
+                } else {
 
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
@@ -92,32 +92,64 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-
-        //sign in
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getApplicationContext(), "Sign in success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
-                            FirebaseUser user = mAuth.getCurrentUser();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithEmail:failure", task.getException());
-
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        // ...
-                    }
-                });
-
     }
+
+    //LOGIN USER
+    private void loginUser() {
+
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        //email and password conformity tests
+        if (email.isEmpty()) {
+            editTextEmail.setError("Email is required");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Please enter a valid email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            editTextPassword.setError("Password is required");
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        if (password.length() < 6) {
+            editTextPassword.setError("Minimum length of password should be 6");
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        //login user
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getApplicationContext(), "Sign in success", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, MessagesActivity.class));
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        //Log.w(TAG, "signInWithEmail:failure", task.getException());
+
+                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            });
+
+        }
 
     @Override
     public void onClick(View view) {
@@ -127,9 +159,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.email_sign_in_button:
-                registerUser();
-                //startActivity(new Intent(this, MessageAdapter.class));
-                //Toast.makeText(getApplicationContext(), "sign in success", Toast.LENGTH_SHORT).show();
+                loginUser();
                 break;
         }
     }
