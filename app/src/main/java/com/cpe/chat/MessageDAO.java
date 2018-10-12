@@ -6,8 +6,12 @@ import java.util.List;
 public enum MessageDAO {
     INSTANCE;
 
-    public List<Message> getAll() {
-        List<Message> messages = new ArrayList<>();
-        messages.add();
+    public List<String> getAll() {
+        List<String> messages = new ArrayList<>();
+        messages.add("message 1");
+        messages.add("message 2");
+        messages.add("message 3");
+
+        return messages;
     }
 }

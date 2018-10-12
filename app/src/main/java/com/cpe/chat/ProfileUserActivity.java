@@ -55,18 +55,31 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
         FirebaseUser user = mAuth.getCurrentUser();
         textViewWelcome.setText("Welcome "+user.getEmail());
-        userdao.save(new UserDetails(user.getUid(), usernameEditText.getText().toString()));
 
     }
 
 
 
     @Override
-    public void onClick(View v) {
-        FirebaseAuth.getInstance().signOut();
-        Toast.makeText(this, "Log out success", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+    public void onClick(View view) {
+
+
+        switch (view.getId()) {
+            case R.id.logout_button:
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(this, "Log out success", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.send_info:
+                FirebaseUser user = mAuth.getCurrentUser();
+                userdao.save(new UserDetails(user.getUid(), usernameEditText.getText().toString()));
+                Toast.makeText(this, "Username saved", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(this, Message.class);
+                startActivity(intent2);
+                break;
+        }
     }
 }
 
