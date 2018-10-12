@@ -5,11 +5,13 @@ import android.text.Editable;
 import java.util.Objects;
 
 public class UserDetails {
+    private final String email;
     private String uid;
     private String nickname;
 
-    public UserDetails(String uid, String nickname) {
+    public UserDetails(String uid, String email, String nickname) {
         this.uid = uid;
+        this.email = email;
         this.nickname = nickname;
     }
 
@@ -28,6 +30,12 @@ public class UserDetails {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

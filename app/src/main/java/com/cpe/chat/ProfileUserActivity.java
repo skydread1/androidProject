@@ -21,7 +21,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
     private EditText usernameEditText;
     private Button buttonLogout;
     private Button sendinfobutton;
-    private UserDAO userdao = UserDAO.INSTANCE;
+    private UserDAO userdao;
 
     //Auth and Database
     private FirebaseAuth mAuth;
@@ -74,8 +74,8 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.send_info:
                 FirebaseUser user = mAuth.getCurrentUser();
-                userdao.save(new UserDetails(user.getUid(), usernameEditText.getText().toString()));
-                Toast.makeText(this, "Username saved", Toast.LENGTH_SHORT).show();
+                userdao = new UserDAO();
+                userdao.saveUser(new UserDetails(user.getUid(), user.getEmail(), usernameEditText.getText().toString()));
                 Intent intent2 = new Intent(this, MessageDAO.class);
                 startActivity(intent2);
                 break;
