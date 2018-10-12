@@ -12,22 +12,36 @@ public class Message extends AppCompatActivity {
     private String id;
     private String senderNickname;
     private String message;
-    private MessageDAO messageDao;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_messages);
+    public Message(String id, String senderNickname, String message) {
+        this.id = id;
+        this.senderNickname = senderNickname;
+        this.message = message;
+    }
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_id);
-        List<String> messages = messageDao.getAll();
+    public String getId() {
+        return id;
+    }
 
-        // use a linear layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+    public String getSenderNickname() {
+        return senderNickname;
+    }
 
-        // specify an adapter
-        MessageAdapter adapter = new MessageAdapter(messages, this);
-        recyclerView.setAdapter(adapter);
+    public String getMessage() {
+        return message;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSenderNickname(String senderNickname) {
+        this.senderNickname = senderNickname;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
+
+

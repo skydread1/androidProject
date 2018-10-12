@@ -23,12 +23,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
-    List<String> messages;
+    List<Message> messages;
 
     Context context;
     LayoutInflater layoutInflater;
 
-    public MessageAdapter(List<String> messages, Context context) {
+    public MessageAdapter(List<Message> messages, Context context) {
         super();
         this.messages = messages;
         this.context = context;
@@ -44,7 +44,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.textView.setText(messages.get(i));
+        viewHolder.textView.setText(messages.get(i).getId() +" "+messages.get(i).getSenderNickname()+" says: "+messages.get(i).getMessage());
     }
 
     @Override

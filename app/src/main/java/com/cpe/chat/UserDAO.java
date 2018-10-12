@@ -1,5 +1,7 @@
 package com.cpe.chat;
 
+import android.widget.Toast;
+
 public enum UserDAO {
     INSTANCE;
 

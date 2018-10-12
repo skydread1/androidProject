@@ -30,7 +30,7 @@ public class MessagesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        MessageAdapter adapter = new MessageAdapter(messages, this);
-        recyclerView.setAdapter(adapter);
+        //MessageAdapter adapter = new MessageAdapter(messages, this);
+        //recyclerView.setAdapter(adapter);
     }
 }

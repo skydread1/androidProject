@@ -76,7 +76,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                 FirebaseUser user = mAuth.getCurrentUser();
                 userdao.save(new UserDetails(user.getUid(), usernameEditText.getText().toString()));
                 Toast.makeText(this, "Username saved", Toast.LENGTH_SHORT).show();
-                Intent intent2 = new Intent(this, Message.class);
+                Intent intent2 = new Intent(this, MessageDAO.class);
                 startActivity(intent2);
                 break;
         }

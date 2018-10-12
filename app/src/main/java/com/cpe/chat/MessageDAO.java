@@ -1,17 +1,38 @@
 package com.cpe.chat;
 
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public enum MessageDAO {
-    INSTANCE;
+public class MessageDAO extends AppCompatActivity {
 
-    public List<String> getAll() {
-        List<String> messages = new ArrayList<>();
-        messages.add("message 1");
-        messages.add("message 2");
-        messages.add("message 3");
+    public List<Message> getAll() {
+        List<Message> messages = new ArrayList<>();
+        messages.add(new Message("id1", "nickname1", "messageContent1"));
+        messages.add(new Message("id2", "nickname2", "messageContent2"));
+        messages.add(new Message("id3", "nickname3", "messageContent3"));
 
         return messages;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_messages);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_id);
+        List<Message> messages = getAll();
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter
+        MessageAdapter adapter = new MessageAdapter(messages, this);
+        recyclerView.setAdapter(adapter);
     }
 }
