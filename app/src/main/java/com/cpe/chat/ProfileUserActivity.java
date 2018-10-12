@@ -21,7 +21,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
     private EditText usernameEditText;
     private Button buttonLogout;
     private Button sendinfobutton;
-    private UserDAO userdao;
+    private UserDAO userdao = UserDAO.INSTANCE;
 
     //Auth and Database
     private FirebaseAuth mAuth;
@@ -48,7 +48,6 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         //Initialize Database
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-
         //Listeners
         buttonLogout.setOnClickListener(this);
         sendinfobutton.setOnClickListener(this);
@@ -74,10 +73,10 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.send_info:
                 FirebaseUser user = mAuth.getCurrentUser();
-                userdao = new UserDAO();
+
                 userdao.saveUser(new UserDetails(user.getUid(), user.getEmail(), usernameEditText.getText().toString()));
-                Intent intent2 = new Intent(this, MessageDAO.class);
-                startActivity(intent2);
+                intent = new Intent(this, MessageActivity.class);
+                startActivity(intent);
                 break;
         }
     }
