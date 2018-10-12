@@ -16,4 +16,7 @@
     <string name="action_sign_in_short">Sign In</string>
     <string name="welcome">Welcome</string>
     <string name="logout">log Out</string>
+    <string name="username">Enter an Username</string>
+    <string name="send_info">Send Info</string>
+
 </resources>
