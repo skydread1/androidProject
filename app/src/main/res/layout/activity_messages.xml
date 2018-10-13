@@ -4,11 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MessagesActivity">
+    tools:context=".MessageActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_view_id"></android.support.v7.widget.RecyclerView>
+        android:layout_height="417dp"></android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_message_layout"
+        android:layout_width="261dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message_list">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_message" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_send_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/input_message_layout"
+        app:layout_constraintTop_toBottomOf="@+id/message_list" />
 
 </android.support.constraint.ConstraintLayout>

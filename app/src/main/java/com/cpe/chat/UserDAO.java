@@ -21,6 +21,5 @@ public enum UserDAO {
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         databaseReference = db.getReference().child("users");
         databaseReference.child(user.getUid()).setValue(userDetails);
-
     }
 }

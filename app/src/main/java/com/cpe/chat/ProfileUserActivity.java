@@ -73,7 +73,6 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.send_info:
                 FirebaseUser user = mAuth.getCurrentUser();
-
                 userdao.saveUser(new UserDetails(user.getUid(), user.getEmail(), usernameEditText.getText().toString()));
                 intent = new Intent(this, MessageActivity.class);
                 startActivity(intent);

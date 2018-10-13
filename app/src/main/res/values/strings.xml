@@ -18,5 +18,7 @@
     <string name="logout">log Out</string>
     <string name="username">Enter an Username</string>
     <string name="send_info">Send Info</string>
+    <string name="send">Send</string>
+    <string name="enter_message">Type your message here</string>
 
 </resources>

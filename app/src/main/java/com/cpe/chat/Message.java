@@ -1,14 +1,21 @@
 package com.cpe.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message extends AppCompatActivity {
+public class Message {
     private String id;
     private String senderNickname;
     private String message;
@@ -42,6 +49,9 @@ public class Message extends AppCompatActivity {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
 }
+
 
 

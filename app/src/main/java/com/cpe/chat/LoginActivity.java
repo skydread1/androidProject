@@ -37,8 +37,8 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.email_sign_up_button).setOnClickListener(this);
     }
 
-    //CREATE USER
-    private void registerUser() {
+    //check email and password conformity
+    private boolean isInfoValid(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -46,26 +46,33 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
-            return;
+            return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email");
             editTextEmail.requestFocus();
-            return;
+            return false;
         }
 
         if (password.isEmpty()) {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
-            return;
+            return false;
         }
 
         if (password.length() < 6) {
             editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
-            return;
+            return false;
         }
+        return true;
+    }
+    //CREATE USER
+    private void registerUser() {
+
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -96,31 +103,6 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        //email and password conformity tests
-        if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("Please enter a valid email");
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if (password.isEmpty()) {
-            editTextPassword.setError("Password is required");
-            editTextPassword.requestFocus();
-            return;
-        }
-
-        if (password.length() < 6) {
-            editTextPassword.setError("Minimum length of password should be 6");
-            editTextPassword.requestFocus();
-            return;
-        }
-
         progressBar.setVisibility(View.VISIBLE);
 
         //login user
@@ -150,11 +132,16 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.email_sign_up_button:
-                registerUser();
+                isInfoValid();
+                if(isInfoValid()){
+                    registerUser();
+                }
                 break;
 
             case R.id.email_sign_in_button:
-                loginUser();
+                if(isInfoValid()) {
+                    loginUser();
+                }
                 break;
         }
     }
