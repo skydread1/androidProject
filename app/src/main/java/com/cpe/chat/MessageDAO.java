@@ -22,9 +22,14 @@ public enum MessageDAO {
         return messages;
     }
 
-    public void saveMessage(Message message){
+    public void saveMessage(String messageContent){
         //Get Database Reference
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
+
+        //instance of message
+        Message message = new Message(user.getUid(), user.getEmail(), messageContent);
+
+        //save to db
         databaseReference = db.getReference().child("messages");
         databaseReference.child(user.getUid()).setValue(message);
     }
