@@ -18,12 +18,12 @@ import java.util.List;
 public class Message {
     private String id;
     private String senderNickname;
-    private String message;
+    private String messageContent;
 
-    public Message(String id, String senderNickname, String message) {
+    public Message(String id, String senderNickname, String messageContent) {
         this.id = id;
         this.senderNickname = senderNickname;
-        this.message = message;
+        this.messageContent = messageContent;
     }
 
     public String getId() {
@@ -34,8 +34,8 @@ public class Message {
         return senderNickname;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessageContent() {
+        return messageContent;
     }
 
     public void setId(String id) {
@@ -46,10 +46,9 @@ public class Message {
         this.senderNickname = senderNickname;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(String messageContent) {
+        this.messageContent = messageContent;
     }
-
 
 }
 

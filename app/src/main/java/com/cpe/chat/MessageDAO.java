@@ -37,8 +37,10 @@ public enum MessageDAO {
                 chat.clear();
                 Iterable<DataSnapshot> messageIDs = dataSnapshot.getChildren();
                 for(DataSnapshot msg : messageIDs){
+                    String key=msg.getKey();
+                    Log.d("ggg",key);
                     Message message = msg.getValue(Message.class);
-                    Log.d("ccc", message.getId() + message.getSenderNickname() + message.getMessage());
+                    Log.d("ccc", message.getId() + message.getSenderNickname() + message.getMessageContent());
                     chat.add(message);
                 }
             }
