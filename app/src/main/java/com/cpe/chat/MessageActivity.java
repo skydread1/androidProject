@@ -1,6 +1,7 @@
 package com.cpe.chat;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,12 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         // specify an adapter
         MessageAdapter adapter = new MessageAdapter(messages, this);
         recyclerView.setAdapter(adapter);
+
+        //test display messages
+
+
     }
+
 
     @Override
     public void onClick(View view) {
