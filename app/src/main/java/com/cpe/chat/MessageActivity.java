@@ -1,5 +1,6 @@
 package com.cpe.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -40,15 +41,12 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         // specify an adapter
         MessageAdapter adapter = new MessageAdapter(messages, this);
         recyclerView.setAdapter(adapter);
-
-        //test display messages
-
-
     }
 
 
     @Override
     public void onClick(View view) {
         messagedao.saveMessage(messageContent.getText().toString());
+        startActivity(new Intent(MessageActivity.this, MessageActivity.class));
     }
 }

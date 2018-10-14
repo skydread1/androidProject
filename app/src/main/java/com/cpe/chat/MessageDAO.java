@@ -24,24 +24,29 @@ public enum MessageDAO {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference;
     private List<Message> chat;
+    private String nickname;
     private FirebaseUser user;
+    private UserDAO userdao = UserDAO.INSTANCE;
 
     public List<Message> getAll() {
         user = mAuth.getInstance().getCurrentUser();
         chat = new ArrayList<>();
         reference = db.getReference().child("messages");
-        Log.d("aaa", "This is my message");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chat.clear();
                 Iterable<DataSnapshot> messageIDs = dataSnapshot.getChildren();
                 for(DataSnapshot msg : messageIDs){
-                    String key=msg.getKey();
-                    Log.d("ggg",key);
-                    Message message = msg.getValue(Message.class);
-                    Log.d("ccc", message.getId() + message.getSenderNickname() + message.getMessageContent());
-                    chat.add(message);
+
+                    //this should work but doesn't for no reason
+                    //Message message = msg.getValue(Message.class);
+
+                    //retrieving element one by one...
+                    String id = msg.child("id").getValue(String.class);
+                    String messageContent = msg.child("messageContent").getValue(String.class);
+                    String senderNickname = msg.child("senderNickname").getValue(String.class);
+                    chat.add(new Message(id, senderNickname, messageContent));
                 }
             }
 
@@ -58,8 +63,12 @@ public enum MessageDAO {
         //Get Database Reference
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
+        //get the nickname
+        nickname = userdao.recoverNickname();
+        Log.d("nickname2",nickname);
+
         //instance of message
-        Message message = new Message(user.getUid(), user.getEmail(), messageContent);
+        Message message = new Message(user.getUid(), nickname, messageContent);
 
         //save to db
         reference = db.getReference().child("messages");
