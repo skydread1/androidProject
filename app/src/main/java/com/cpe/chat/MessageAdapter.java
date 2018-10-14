@@ -44,7 +44,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.textView.setText(messages.get(i).getSenderNickname()+" says:\n"+messages.get(i).getMessageContent());
+        viewHolder.textView.setText(messages.get(i).getSenderNickname()+" said the " + messages.get(i).getDate() +"\n"+messages.get(i).getMessageContent());
     }
 
     @Override

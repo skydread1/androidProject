@@ -13,7 +13,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 
@@ -24,7 +27,6 @@ public enum MessageDAO {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference;
     private List<Message> chat;
-    private String nickname;
     private FirebaseUser user;
     private UserDAO userdao = UserDAO.INSTANCE;
 
@@ -32,7 +34,7 @@ public enum MessageDAO {
         user = mAuth.getInstance().getCurrentUser();
         chat = new ArrayList<>();
         reference = db.getReference().child("messages");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("date").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chat.clear();
@@ -46,7 +48,8 @@ public enum MessageDAO {
                     String id = msg.child("id").getValue(String.class);
                     String messageContent = msg.child("messageContent").getValue(String.class);
                     String senderNickname = msg.child("senderNickname").getValue(String.class);
-                    chat.add(new Message(id, senderNickname, messageContent));
+                    String date = msg.child("date").getValue(String.class);
+                    chat.add(new Message(id, senderNickname, messageContent, date));
                 }
             }
 
@@ -64,11 +67,15 @@ public enum MessageDAO {
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
         //get the nickname
-        nickname = userdao.recoverNickname();
-        Log.d("nickname2",nickname);
+        String nickname = userdao.INSTANCE.recoverNickname();
+
+        //get time and create a string for it
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        String date = mdformat.format(calendar.getTime());
 
         //instance of message
-        Message message = new Message(user.getUid(), nickname, messageContent);
+        Message message = new Message(user.getUid(), user.getEmail(), messageContent, date);
 
         //save to db
         reference = db.getReference().child("messages");

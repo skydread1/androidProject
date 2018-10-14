@@ -10,8 +10,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
 
-public enum UserDAO {
+import javax.security.auth.callback.Callback;
+
+
+public enum UserDAO{
     INSTANCE;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -25,6 +29,7 @@ public enum UserDAO {
     }
 
     public String recoverNickname(){
+        nickname = new String();
         user = mAuth.getInstance().getCurrentUser();
         databaseReference = db.getReference().child("users");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -33,19 +38,17 @@ public enum UserDAO {
                 Iterable<DataSnapshot> usersIDs = dataSnapshot.getChildren();
                 for(DataSnapshot item : usersIDs){
                     if(item.getKey().equals(user.getUid())){
-                        nickname = item.child("nickname").getValue(String.class);
-
+                        nickname= item.child("nickname").getValue(String.class);
                     }
                 }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
         return nickname;
-
     }
 
     public void signOut(){
