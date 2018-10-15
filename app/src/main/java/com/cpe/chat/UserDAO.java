@@ -29,8 +29,8 @@ public enum UserDAO{
     }
 
     public String recoverNickname(){
-        nickname = new String();
         user = mAuth.getInstance().getCurrentUser();
+        nickname = "test";
         databaseReference = db.getReference().child("users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -48,6 +48,7 @@ public enum UserDAO{
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+        Log.d("nicknameglobal", nickname);
         return nickname;
     }
 

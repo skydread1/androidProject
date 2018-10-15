@@ -29,6 +29,7 @@ public enum MessageDAO {
     private List<Message> chat;
     private FirebaseUser user;
     private UserDAO userdao = UserDAO.INSTANCE;
+    private String nickname;
 
     public List<Message> getAll() {
         user = mAuth.getInstance().getCurrentUser();
@@ -62,23 +63,42 @@ public enum MessageDAO {
         return chat;
     }
 
-    public void saveMessage(String messageContent){
-        //Get Database Reference
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+    public void saveMessage(final String messageContent){
+        //Because we want to display the nickname, we need to save our message in the
+        //firebase addValueEventListener method becaus the method is asynchronous
+        nickname = new String();
+        reference = db.getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> usersIDs = dataSnapshot.getChildren();
+                for(DataSnapshot item : usersIDs){
+                    if(item.getKey().equals(user.getUid())){
+                        nickname= item.child("nickname").getValue(String.class);
+                        Log.d("nickname1", nickname);
+                    }
+                }
 
-        //get the nickname
-        String nickname = userdao.INSTANCE.recoverNickname();
+                Log.d("nickname2", nickname);
+                //Get Database Reference
+                FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
-        //get time and create a string for it
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-        String date = mdformat.format(calendar.getTime());
+                //get time and create a string for it
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat mdformat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+                String date = mdformat.format(calendar.getTime());
 
-        //instance of message
-        Message message = new Message(user.getUid(), user.getEmail(), messageContent, date);
+                //instance of message
+                Message message = new Message(user.getUid(), nickname, messageContent, date);
 
-        //save to db
-        reference = db.getReference().child("messages");
-        reference.child(messageContent).setValue(message);
+                //save to db
+                reference = db.getReference().child("messages");
+                reference.child(messageContent).setValue(message);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 }
