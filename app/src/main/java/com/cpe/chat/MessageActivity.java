@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,17 +31,24 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         //Listeners
         button_send_message.setOnClickListener(this);
 
-        //recyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_id);
-        List<Message> messages = MessageDAO.INSTANCE.getAll();
+        //retrieving messages List thanks to a callback function because FireBase listeners are asynchronous
+        messagedao.INSTANCE.getAll(new FirebaseCallback() {
+            @Override
+            public void onCallbackGetMessages(List<Message> messages) {
 
-        // use a linear layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+                //recyclerView
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_id);
 
-        // specify an adapter
-        MessageAdapter adapter = new MessageAdapter(messages, this);
-        recyclerView.setAdapter(adapter);
+                // use a linear layout manager
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(layoutManager);
+
+                // specify an adapter
+                MessageAdapter adapter = new MessageAdapter(messages , getApplicationContext());
+                recyclerView.setAdapter(adapter);
+                recyclerView.smoothScrollToPosition(adapter.getItemCount() -1);
+            }
+        });
     }
 
 

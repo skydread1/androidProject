@@ -31,7 +31,7 @@ public enum MessageDAO {
     private UserDAO userdao = UserDAO.INSTANCE;
     private String nickname;
 
-    public List<Message> getAll() {
+    public void getAll(final FirebaseCallback firebaseCallback) {
         user = mAuth.getInstance().getCurrentUser();
         chat = new ArrayList<>();
         reference = db.getReference().child("messages");
@@ -51,6 +51,9 @@ public enum MessageDAO {
                     String senderNickname = msg.child("senderNickname").getValue(String.class);
                     String date = msg.child("date").getValue(String.class);
                     chat.add(new Message(id, senderNickname, messageContent, date));
+
+                    //sending the messages list to the callback to overpass the asynchronous issue
+                    firebaseCallback.onCallbackGetMessages(chat);
                 }
             }
 
@@ -59,13 +62,11 @@ public enum MessageDAO {
                 Log.d("ddd", "json retrieving failed");
             }
         });
-
-        return chat;
     }
 
     public void saveMessage(final String messageContent){
         //Because we want to display the nickname, we need to save our message in the
-        //firebase addValueEventListener method becaus the method is asynchronous
+        //firebase addValueEventListener method because the method is asynchronous
         nickname = new String();
         reference = db.getReference().child("users");
         reference.addValueEventListener(new ValueEventListener() {
@@ -75,11 +76,8 @@ public enum MessageDAO {
                 for(DataSnapshot item : usersIDs){
                     if(item.getKey().equals(user.getUid())){
                         nickname= item.child("nickname").getValue(String.class);
-                        Log.d("nickname1", nickname);
                     }
                 }
-
-                Log.d("nickname2", nickname);
                 //Get Database Reference
                 FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
