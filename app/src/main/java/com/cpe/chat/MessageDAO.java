@@ -2,7 +2,6 @@ package com.cpe.chat;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -12,13 +11,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
 
 public enum MessageDAO {
     INSTANCE;
@@ -31,7 +27,7 @@ public enum MessageDAO {
     private UserDAO userdao = UserDAO.INSTANCE;
     private String nickname;
 
-    public void getAll(final FirebaseCallback firebaseCallback) {
+    public void getAll(final FirebaseCallbackGetMessage firebaseCallbackGetMessage) {
         user = mAuth.getInstance().getCurrentUser();
         chat = new ArrayList<>();
         reference = db.getReference().child("messages");
@@ -53,7 +49,7 @@ public enum MessageDAO {
                     chat.add(new Message(id, senderNickname, messageContent, date));
 
                     //sending the messages list to the callback to overpass the asynchronous issue
-                    firebaseCallback.onCallbackGetMessages(chat);
+                    firebaseCallbackGetMessage.onCallbackGetMessages(chat);
                 }
             }
 

@@ -2,11 +2,9 @@ package com.cpe.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +30,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         button_send_message.setOnClickListener(this);
 
         //retrieving messages List thanks to a callback function because FireBase listeners are asynchronous
-        messagedao.INSTANCE.getAll(new FirebaseCallback() {
+        messagedao.INSTANCE.getAll(new FirebaseCallbackGetMessage() {
             @Override
             public void onCallbackGetMessages(List<Message> messages) {
 

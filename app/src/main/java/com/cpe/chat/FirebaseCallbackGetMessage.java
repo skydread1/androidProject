@@ -2,6 +2,6 @@ package com.cpe.chat;
 
 import java.util.List;
 
-public interface FirebaseCallback {
+public interface FirebaseCallbackGetMessage {
     void onCallbackGetMessages(List<Message> messages);
 }

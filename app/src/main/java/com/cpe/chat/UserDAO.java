@@ -10,46 +10,38 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.ArrayList;
-
-import javax.security.auth.callback.Callback;
 
 
 public enum UserDAO{
     INSTANCE;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = db.getReference();
-    private FirebaseUser user;
-    private String nickname;
+    private DatabaseReference reference = db.getReference();
+    private FirebaseUser userAuth;
+    private String userName;
 
-    public String recoverEmail(){
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
-        return user.getEmail();
-    }
-
-    public String recoverNickname(){
-        user = mAuth.getInstance().getCurrentUser();
-        nickname = "test";
-        databaseReference = db.getReference().child("users");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+    public void getUsernameFromDB(final FirebaseCallbackGetUsername firebaseCallbackGetUsername) {
+        userAuth = mAuth.getInstance().getCurrentUser();
+        userName = new String();
+        reference = db.getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> usersIDs = dataSnapshot.getChildren();
-                for(DataSnapshot item : usersIDs){
-                    if(item.getKey().equals(user.getUid())){
-                        nickname= item.child("nickname").getValue(String.class);
-                    }
-                }
-
+                userName = dataSnapshot.child(userAuth.getUid()).child("nickname").getValue(String.class);
+                //sending the messages list to the callback to overpass the asynchronous issue
+                firebaseCallbackGetUsername.onCallbackGetUsername(userName);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("ddd", "json retrieving failed");
             }
         });
-        Log.d("nicknameglobal", nickname);
-        return nickname;
+    }
+
+    public String getUserEmail(){
+        userAuth = mAuth.getInstance().getCurrentUser();
+        return userAuth.getEmail();
     }
 
     public void signOut(){
@@ -63,7 +55,7 @@ public enum UserDAO{
         //creation of a new user
         UserDetails userDetails = new UserDetails(user.getUid(), user.getEmail(), username);
 
-        databaseReference = db.getReference().child("users");
-        databaseReference.child(user.getUid()).setValue(userDetails);
+        reference = db.getReference().child("users");
+        reference.child(user.getUid()).setValue(userDetails);
     }
 }

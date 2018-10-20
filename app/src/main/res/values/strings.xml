@@ -16,8 +16,8 @@
     <string name="action_sign_in_short">Sign In</string>
     <string name="welcome">Welcome</string>
     <string name="logout">log Out</string>
-    <string name="username">Enter an Username</string>
-    <string name="send_info">Send Info</string>
+    <string name="profileUsername">Change Username</string>
+    <string name="change">Change</string>
     <string name="send">Send</string>
     <string name="enter_message">Type your message here</string>
 
