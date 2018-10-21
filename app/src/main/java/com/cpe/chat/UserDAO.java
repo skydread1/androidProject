@@ -2,6 +2,8 @@ package com.cpe.chat;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.Patterns;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -10,6 +12,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 
 public enum UserDAO{
@@ -38,6 +42,9 @@ public enum UserDAO{
             }
         });
     }
+
+
+
 
     public String getUserEmail(){
         userAuth = mAuth.getInstance().getCurrentUser();
@@ -70,10 +77,54 @@ public enum UserDAO{
 
     public void updateUserColor(String color){
 
-        //Get Database Reference
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+        boolean trueHexcolor = checkColor(color);
+        //if color conforms hex code do
+        if (trueHexcolor == true ){
+            Log.d("myTag", "TRUE");
+            //Get Database Reference
+            FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
-        reference = db.getReference().child("users");
-        reference.child(user.getUid()).child("color").setValue(color);
+            reference = db.getReference().child("users");
+            reference.child(user.getUid()).child("color").setValue(color);
+        } else{
+            //else do nothing
+            Log.d("myTag", "FALSE");
+        }
+
+
     }
+
+
+
+    //check if color hex value is valid
+    private boolean checkColor(String color){
+        //email and password conformity tests
+        Log.d("myTag", "INCHECK color");
+        if (color.isEmpty()) {
+           // Toast.makeText(UserDAO.this, "Color is Empty", LENGTH_SHORT).show();
+            Log.d("myTag", "EMPTY");
+            return false;
+        }
+        // value string can only include characters # a-f A-F 0-9 value is ok
+        if (color.matches("/^#[0-9A-F]+$/")) {
+            Log.d("myTag", "characters ok");
+            // check length:
+            if (color.length() > 6) {
+                Log.d("myTag", "Maximum length of password should be 6");
+                //("Maximum length of password should be 6")
+                return false;
+            }
+            if (color.length() < 6) {
+                //("Minimum length of password should be 6")
+                Log.d("myTag", "Minimum length of password should be 6");
+                return false;
+            }
+            return true;
+        } else {
+            Log.d("myTag", "characters not ok"+ color.matches("/^#[0-9A-F]+$/"));
+
+            return false;
+        }
+    }
+
 }
