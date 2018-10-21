@@ -109,14 +109,9 @@ public enum UserDAO{
         if (color.matches("/^#[0-9A-F]+$/")) {
             Log.d("myTag", "characters ok");
             // check length:
-            if (color.length() > 6) {
-                Log.d("myTag", "Maximum length of password should be 6");
+            if (color.length()!= 7) {
+                Log.d("myTag", "Length");
                 //("Maximum length of password should be 6")
-                return false;
-            }
-            if (color.length() < 6) {
-                //("Minimum length of password should be 6")
-                Log.d("myTag", "Minimum length of password should be 6");
                 return false;
             }
             return true;
