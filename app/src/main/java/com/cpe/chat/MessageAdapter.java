@@ -1,6 +1,7 @@
 package com.cpe.chat;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        int red = Color.parseColor(messages.get(i).getColor());
+        viewHolder.textView.setBackgroundColor(red);
         viewHolder.textView.setText(messages.get(i).getSenderNickname()+" said the " + messages.get(i).getDate() +"\n"+messages.get(i).getMessageContent());
     }
 

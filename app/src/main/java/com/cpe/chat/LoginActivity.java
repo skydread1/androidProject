@@ -22,6 +22,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
     EditText editTextEmail, editTextPassword;
 
     private FirebaseAuth mAuth;
+    private UserDAO userdao = UserDAO.INSTANCE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,9 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
+                    //add user in DB
+                    userdao.saveUser();
+                    //start new activity
                     Toast.makeText(LoginActivity.this, "registration complete", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, ProfileUserActivity.class));
                 } else {
@@ -134,6 +138,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
             case R.id.email_sign_up_button:
                 isInfoValid();
                 if(isInfoValid()){
+                    //register user in Auth
                     registerUser();
                 }
                 break;

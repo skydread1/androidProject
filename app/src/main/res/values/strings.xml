@@ -17,7 +17,7 @@
     <string name="welcome">Welcome</string>
     <string name="logout">log Out</string>
     <string name="profileUsername">Change Username</string>
-    <string name="change">Change</string>
+    <string name="change">Update Profile</string>
     <string name="send">Send</string>
     <string name="enter_message">Type your message here</string>
 

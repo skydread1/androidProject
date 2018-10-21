@@ -20,38 +20,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_message_button" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/username"
-        android:layout_width="183dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="43dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_message_text"
-        app:layout_constraintEnd_toStartOf="@+id/profile_change_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_change_username">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/profile_username_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/profileUsername" />
-    </android.support.design.widget.TextInputLayout>
-
     <Button
         android:id="@+id/profile_change_button"
-        android:layout_width="173dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="352dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="18dp"
         android:text="@string/change"
         app:layout_constraintBottom_toTopOf="@+id/profile_message_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/username"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_change_username" />
 
     <TextView
@@ -101,9 +80,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="17dp"
-        android:layout_marginBottom="1dp"
-        android:text="Wanna change your username ? Do it down below"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        android:text="Wanna change profile info ? Click down below"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

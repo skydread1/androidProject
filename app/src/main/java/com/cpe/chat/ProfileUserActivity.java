@@ -3,13 +3,12 @@ package com.cpe.chat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
 
 
 public class ProfileUserActivity extends AppCompatActivity implements View.OnClickListener {
@@ -17,8 +16,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
     private TextView textViewProfileEmail;
     private TextView textViewProfileUsername;
 
-    private EditText editTextUsernameInput;
-    private Button buttonChangeUsername;
+    private Button buttonChangeInfo;
 
     private TextView textViewMessageText;
     private Button buttonLogout;
@@ -36,8 +34,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         textViewProfileEmail = (TextView) findViewById(R.id.profile_email);
         textViewProfileUsername = (TextView) findViewById(R.id.profile_username);
 
-        editTextUsernameInput = (EditText) findViewById(R.id.profile_username_input);
-        buttonChangeUsername = (Button) findViewById(R.id.profile_change_button);
+        buttonChangeInfo = (Button) findViewById(R.id.profile_change_button);
 
         textViewMessageText = (TextView) findViewById(R.id.profile_message_text);
         buttonChat = (Button) findViewById(R.id.profile_message_button);
@@ -46,7 +43,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
 
         //Listeners
-        buttonChangeUsername.setOnClickListener(this);
+        buttonChangeInfo.setOnClickListener(this);
         buttonChat.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
@@ -54,8 +51,8 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         userdao.INSTANCE.getUsernameFromDB(new FirebaseCallbackGetUsername() {
             @Override
             public void onCallbackGetUsername(String userName) {
-                textViewProfileEmail.setText(userdao.getUserEmail());
-                textViewProfileUsername.setText(userName);
+                textViewProfileEmail.setText("Email Address : " + userdao.getUserEmail());
+                textViewProfileUsername.setText("Username : " + userName);
             }
         });
     }
@@ -68,16 +65,8 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
         switch (view.getId()) {
             case R.id.profile_change_button:
-                String usernameInput = editTextUsernameInput.getText().toString().trim();
-                if(usernameInput.isEmpty()){
-                    editTextUsernameInput.setError("Email is required");
-                    editTextUsernameInput.requestFocus();
-                }
-                else{
-                    userdao.saveUser(editTextUsernameInput.getText().toString());
-                    Intent intentProfile = new Intent(this, ProfileUserActivity.class);
-                    startActivity(intentProfile);
-                }
+                Intent intentProfileUpdate = new Intent(ProfileUserActivity.this, ProfileUpdateActivity.class);
+                startActivity(intentProfileUpdate);
                 break;
 
             case R.id.profile_message_button:
@@ -88,6 +77,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
             case R.id.logout_button:
                 userdao.signOut();
                 Toast.makeText(this, "Log out success", Toast.LENGTH_SHORT).show();
+                finish();
                 Intent intentLogin = new Intent(this, LoginActivity.class);
                 startActivity(intentLogin);
                 break;

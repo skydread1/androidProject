@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileUserActivity" />
+        <activity android:name=".ProfileUpdateActivity" />
         <activity android:name=".MessageActivity" />
     </application>
 

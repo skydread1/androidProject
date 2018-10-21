@@ -8,11 +8,13 @@ public class UserDetails {
     private final String email;
     private String uid;
     private String nickname;
+    private String color;
 
-    public UserDetails(String uid, String email, String nickname) {
+    public UserDetails(String uid, String email, String nickname, String color) {
         this.uid = uid;
         this.email = email;
         this.nickname = nickname;
+        this.color = color;
     }
 
     public String getUid() {
@@ -31,11 +33,11 @@ public class UserDetails {
         this.nickname = nickname;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
+    public String getColor() { return color; }
 
+    public void setColor(String color) { this.color = color; }
 
     @Override
     public boolean equals(Object o) {

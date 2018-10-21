@@ -53,6 +53,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         messagedao.saveMessage(messageContent.getText().toString());
+        finish();
         startActivity(new Intent(MessageActivity.this, MessageActivity.class));
     }
 }

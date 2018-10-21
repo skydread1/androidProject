@@ -21,41 +21,36 @@ public class Message {
     private String senderNickname;
     private String messageContent;
     private String date;
+    private String color;
 
-    public Message(String id, String senderNickname, String messageContent, String date) {
+    public Message(String id, String senderNickname, String messageContent, String date, String color) {
         this.id = id;
         this.senderNickname = senderNickname;
         this.messageContent = messageContent;
         this.date = date;
+        this.color = color;
     }
 
     public String getDate() { return date; }
-
     public void setMessageContent(String messageContent) { this.messageContent = messageContent; }
-
     public void setDate(String date) { this.date = date; }
-
     public String getId() {
         return id;
     }
-
     public String getSenderNickname() {
         return senderNickname;
     }
-
     public String getMessageContent() {
         return messageContent;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public void setSenderNickname(String senderNickname) {
         this.senderNickname = senderNickname;
     }
-
-
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
 }
 
 

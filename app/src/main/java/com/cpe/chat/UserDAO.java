@@ -48,14 +48,32 @@ public enum UserDAO{
         FirebaseAuth.getInstance().signOut();
     }
 
-    public void saveUser(String username){
+    public void saveUser(){
 
         //Get Database Reference
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         //creation of a new user
-        UserDetails userDetails = new UserDetails(user.getUid(), user.getEmail(), username);
+        UserDetails userDetails = new UserDetails(user.getUid(), user.getEmail(), user.getEmail(), "#FFFFFF");
 
         reference = db.getReference().child("users");
         reference.child(user.getUid()).setValue(userDetails);
+    }
+
+    public void updateUserUsername(String username){
+
+        //Get Database Reference
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+
+        reference = db.getReference().child("users");
+        reference.child(user.getUid()).child("nickname").setValue(username);
+    }
+
+    public void updateUserColor(String color){
+
+        //Get Database Reference
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+
+        reference = db.getReference().child("users");
+        reference.child(user.getUid()).child("color").setValue(color);
     }
 }
