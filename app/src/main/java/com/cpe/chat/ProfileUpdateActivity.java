@@ -68,9 +68,14 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
                     updateColor.requestFocus();
                 }
                 else{
-                    userdao.updateUserColor(updateColor.getText().toString());
-                    Toast.makeText(ProfileUpdateActivity.this, "Color updated", Toast.LENGTH_SHORT).show();
-                    updateColor.setText("");
+                    if(userdao.checkColor(colorInput)){
+                        userdao.updateUserColor(colorInput);
+                        updateColor.setText("");
+                        Toast.makeText(ProfileUpdateActivity.this, "Color Updated", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(ProfileUpdateActivity.this, "Wrong format, try again", Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
 

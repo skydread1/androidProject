@@ -97,29 +97,12 @@ public enum UserDAO{
 
 
     //check if color hex value is valid
-    private boolean checkColor(String color){
-        //email and password conformity tests
-        Log.d("myTag", "INCHECK color");
-        if (color.isEmpty()) {
-           // Toast.makeText(UserDAO.this, "Color is Empty", LENGTH_SHORT).show();
-            Log.d("myTag", "EMPTY");
-            return false;
-        }
+    public boolean checkColor(String color){
         // value string can only include characters # a-f A-F 0-9 value is ok
-        if (color.matches("/^#[0-9A-F]+$/")) {
-            Log.d("myTag", "characters ok");
-            // check length:
-            if (color.length()!= 7) {
-                Log.d("myTag", "Length");
-                //("Maximum length of password should be 6")
-                return false;
-            }
+        if (color.matches("^#[0-9a-fA-F]{6}$")) {
             return true;
-        } else {
-            Log.d("myTag", "characters not ok"+ color.matches("/^#[0-9A-F]+$/"));
-
-            return false;
         }
+        return false;
     }
 
 }
