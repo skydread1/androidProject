@@ -28,7 +28,7 @@ public enum UserDAO{
         userAuth = mAuth.getInstance().getCurrentUser();
         userName = new String();
         reference = db.getReference().child("users");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userName = dataSnapshot.child(userAuth.getUid()).child("nickname").getValue(String.class);

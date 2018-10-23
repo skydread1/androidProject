@@ -49,12 +49,14 @@ public enum MessageDAO {
                     String date = msg.child("date").getValue(String.class);
                     String color = msg.child("color").getValue(String.class);
                     chat.add(new Message(id, senderNickname, messageContent, date, color));
-                    Log.d("abcde1", id + senderNickname + messageContent + date + color);
                 }
 
                 //sending the messages list to the callback to overpass the asynchronous issue
-                Log.d("abcde2", chat.toString());
-                firebaseCallbackGetMessage.onCallbackGetMessages(chat);
+                Log.d("testitout", chat.toString());
+                if(!chat.isEmpty()){
+                    firebaseCallbackGetMessage.onCallbackGetMessages(chat);
+                }
+
 
             }
 
@@ -71,7 +73,7 @@ public enum MessageDAO {
         nickname = new String();
         color = new String();
         reference = db.getReference().child("users");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
