@@ -72,6 +72,7 @@ public enum UserDAO{
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
         reference = db.getReference().child("users");
+        Log.d("reference1", user.getUid() );
         reference.child(user.getUid()).child("nickname").setValue(username);
     }
 
@@ -93,7 +94,6 @@ public enum UserDAO{
 
 
     }
-
 
 
     //check if color hex value is valid

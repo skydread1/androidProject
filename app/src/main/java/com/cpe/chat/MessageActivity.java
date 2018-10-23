@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener{
@@ -28,19 +32,16 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
         //Listeners
         button_send_message.setOnClickListener(this);
-
         //retrieving messages List thanks to a callback function because FireBase listeners are asynchronous
         messagedao.INSTANCE.getAll(new FirebaseCallbackGetMessage() {
             @Override
             public void onCallbackGetMessages(List<Message> messages) {
-
                 //recyclerView
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_id);
 
                 // use a linear layout manager
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(layoutManager);
-
                 // specify an adapter
                 MessageAdapter adapter = new MessageAdapter(messages , getApplicationContext());
                 recyclerView.setAdapter(adapter);
@@ -52,7 +53,13 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        messagedao.saveMessage(messageContent.getText().toString());
+        Log.d("saveMessageCheck", "yep");
+        messagedao.saveMessage(messageContent.getText().toString(), new FirebaseCallbackSaveMessage() {
+            @Override
+            public void onCallbackSaveMessage(Message message) {
+                FirebaseDatabase.getInstance().getReference().child("messages").child(messageContent.getText().toString()).setValue(message);
+            }
+        });
         finish();
         startActivity(new Intent(MessageActivity.this, MessageActivity.class));
     }

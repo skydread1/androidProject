@@ -49,10 +49,13 @@ public enum MessageDAO {
                     String date = msg.child("date").getValue(String.class);
                     String color = msg.child("color").getValue(String.class);
                     chat.add(new Message(id, senderNickname, messageContent, date, color));
-
-                    //sending the messages list to the callback to overpass the asynchronous issue
-                    firebaseCallbackGetMessage.onCallbackGetMessages(chat);
+                    Log.d("abcde1", id + senderNickname + messageContent + date + color);
                 }
+
+                //sending the messages list to the callback to overpass the asynchronous issue
+                Log.d("abcde2", chat.toString());
+                firebaseCallbackGetMessage.onCallbackGetMessages(chat);
+
             }
 
             @Override
@@ -62,7 +65,7 @@ public enum MessageDAO {
         });
     }
 
-    public void saveMessage(final String messageContent){
+    public void saveMessage(final String messageContent, final FirebaseCallbackSaveMessage firebaseCallbackSaveMessage){
         //Because we want to display the nickname, we need to save our message in the
         //firebase addValueEventListener method because the method is asynchronous
         nickname = new String();
@@ -80,6 +83,7 @@ public enum MessageDAO {
                         color =  item.child("color").getValue(String.class);
                     }
                 }
+
                 //Get Auth Reference
                 FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
@@ -92,8 +96,8 @@ public enum MessageDAO {
                 Message message = new Message(user.getUid(), nickname, messageContent, date, color);
 
                 //save to db
-                reference = db.getReference().child("messages");
-                reference.child(messageContent).setValue(message);
+                //saving the message via callback
+                firebaseCallbackSaveMessage.onCallbackSaveMessage(message);
             }
 
             @Override
