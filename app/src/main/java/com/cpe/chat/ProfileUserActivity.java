@@ -36,7 +36,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
         buttonChangeInfo = (Button) findViewById(R.id.profile_change_button);
 
-        textViewMessageText = (TextView) findViewById(R.id.profile_message_text);
+        //textViewMessageText = (TextView) findViewById(R.id.profile_message_text);
         buttonChat = (Button) findViewById(R.id.profile_message_button);
 
         buttonLogout = (Button) findViewById(R.id.logout_button);

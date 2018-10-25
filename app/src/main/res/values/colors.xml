@@ -3,6 +3,26 @@
   <color name="colorPrimary">#008577</color>
   <color name="colorPrimaryDark">#00574B</color>
   <color name="colorAccent">#D81B60</color>
-  <color name="cpe_black">#000000</color>
-  <color name="cpe_blanc">#FFFFFF</color>
+  <color name="orange">#ed914a</color>
+  <color name="black">#000000</color>
+  <color name="white">#FFFFFF</color>
+
+
+  <!-- Color Design 1 -->
+
+  <color name="d_brigth_blue">#aed1d6</color>
+  <color name="d_red">#e09873</color>
+  <color name="d_gray_blue">#7584ad</color>
+  <color name="d_dark_blue">#314570</color>
+
+  <color name="crazy">#f5d60c</color>
+
+  <!-- Color Design 2-->
+
+  <color name="d2_brigth_blue">#a40a17</color>
+  <color name="d2_marine">#1a1a2a</color>
+  <color name="d2_gray_blue">#a4b4cf</color>
+  <color name="d2_dark_blue2">#3e629b</color>
+  <color name="d2_dark_blue">#d0cac4</color>
+
 </resources>
