@@ -76,7 +76,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.logout_button:
                 userdao.signOut();
-                Toast.makeText(this, "Log out success", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "Log out success", Toast.LENGTH_SHORT).show();
                 finish();
                 Intent intentLogin = new Intent(this, LoginActivity.class);
                 startActivity(intentLogin);
