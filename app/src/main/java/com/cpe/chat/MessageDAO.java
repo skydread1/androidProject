@@ -52,7 +52,6 @@ public enum MessageDAO {
                 }
 
                 //sending the messages list to the callback to overpass the asynchronous issue
-                Log.d("testitout", chat.toString());
                 if(!chat.isEmpty()){
                     firebaseCallbackGetMessage.onCallbackGetMessages(chat);
                 }
