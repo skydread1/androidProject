@@ -103,7 +103,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 public void onCallbackSaveMessage(Message message) {
                     messagedao.savePrivateMessage(message, userToChatId );
                     finish();
-                    startActivity(new Intent(MessageActivity.this, MessageActivity.class));
+                    Intent intentP = new Intent(MessageActivity.this, MessageActivity.class);
+                    intentP.putExtra("userToChatId",userToChatId );
+                    intentP.putExtra("privateChat","private" );
+                    startActivity(intentP);
                 }
             });
         }
@@ -114,7 +117,9 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 public void onCallbackSaveMessage(Message message) {
                     messagedao.saveGeneralMessage(message);
                     finish();
-                    startActivity(new Intent(MessageActivity.this, MessageActivity.class));
+                    Intent intentG = new Intent(MessageActivity.this, MessageActivity.class);
+                    intentG.putExtra("privateChat","general" );
+                    startActivity(intentG);
                 }
             });
         }

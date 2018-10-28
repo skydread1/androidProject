@@ -76,9 +76,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.button_general_chat:
                 Intent intentMessageG = new Intent(ProfileUserActivity.this, MessageActivity.class);
-                Log.d("intenta1", "intent ok");
                 startActivity(intentMessageG);
-                Log.d("intenta2", "start ok");
                 break;
 
             case R.id.button_private_chat:

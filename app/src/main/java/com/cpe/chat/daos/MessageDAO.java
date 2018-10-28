@@ -26,7 +26,8 @@ public enum MessageDAO {
     private FirebaseAuth mAuth;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference;
-    private List<Message> chat;
+    private List<Message> chatG;
+    private List<Message> chatP;
     private FirebaseUser user;
     private UserDAO userdao = UserDAO.INSTANCE;
     private String nickname;
@@ -35,12 +36,12 @@ public enum MessageDAO {
 
     public void getAllGeneralMessages(final FirebaseCallbackGetMessage firebaseCallbackGetMessage) {
         user = mAuth.getInstance().getCurrentUser();
-        chat = new ArrayList<>();
+        chatG = new ArrayList<>();
         reference = db.getReference().child("generalConv").child("messages");
         reference.orderByChild("date").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                chat.clear();
+                chatG.clear();
                 Iterable<DataSnapshot> messageIDs = dataSnapshot.getChildren();
                 for(DataSnapshot msg : messageIDs){
 
@@ -53,12 +54,12 @@ public enum MessageDAO {
                     String senderNickname = msg.child("senderNickname").getValue(String.class);
                     String date = msg.child("date").getValue(String.class);
                     String color = msg.child("color").getValue(String.class);
-                    chat.add(new Message(id, senderNickname, messageContent, date, color));
+                    chatG.add(new Message(id, senderNickname, messageContent, date, color));
                 }
 
                 //sending the messages list to the callback to overpass the asynchronous issue
-                if(!chat.isEmpty()){
-                    firebaseCallbackGetMessage.onCallbackGetMessages(chat);
+                if(!chatG.isEmpty()){
+                    firebaseCallbackGetMessage.onCallbackGetMessages(chatG);
                 }
 
 
@@ -73,7 +74,7 @@ public enum MessageDAO {
 
     public void getAllPrivateMessages(final String userToChatId, final FirebaseCallbackGetMessage firebaseCallbackGetMessage) {
         user = mAuth.getInstance().getCurrentUser();
-        chat = new ArrayList<>();
+        chatP = new ArrayList<>();
         //build the conv id
         //the conversation id will be user1Id - user2Id in alphabetical order
         userIds = new ArrayList<>();
@@ -86,7 +87,7 @@ public enum MessageDAO {
         reference.orderByChild("date").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                chat.clear();
+                chatP.clear();
                 Iterable<DataSnapshot> messageIDs = dataSnapshot.getChildren();
                 for(DataSnapshot msg : messageIDs){
 
@@ -96,12 +97,12 @@ public enum MessageDAO {
                     String senderNickname = msg.child("senderNickname").getValue(String.class);
                     String date = msg.child("date").getValue(String.class);
                     String color = msg.child("color").getValue(String.class);
-                    chat.add(new Message(id, senderNickname, messageContent, date, color));
+                    chatP.add(new Message(id, senderNickname, messageContent, date, color));
                 }
 
                 //sending the messages list to the callback to overpass the asynchronous issue
-                if(!chat.isEmpty()){
-                    firebaseCallbackGetMessage.onCallbackGetMessages(chat);
+                if(!chatP.isEmpty()){
+                    firebaseCallbackGetMessage.onCallbackGetMessages(chatP);
                 }
             }
 
@@ -160,7 +161,6 @@ public enum MessageDAO {
 
     public void savePrivateMessage(Message message, String userToChatId){
         user = mAuth.getInstance().getCurrentUser();
-        chat = new ArrayList<>();
         //build the conv id
         //the conversation id will be user1Id - user2Id in alphabetical order
         userIds = new ArrayList<>();

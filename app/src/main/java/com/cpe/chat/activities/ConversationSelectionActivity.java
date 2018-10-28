@@ -99,14 +99,5 @@ public class ConversationSelectionActivity extends AppCompatActivity implements 
                 }
             }
         });
-
-
-
-        /*Log.d("we are here", String.valueOf(v.getId()));
-        //if (finalI == 99) {
-        Intent intent = new Intent(ConversationSelectionActivity.this, MessageGeneralActivity.class);
-        //intent.putExtra("oldValue", view.getId().);
-        startActivity(intent);*/
-        //}
     }
 }
