@@ -82,7 +82,7 @@ public enum MessageDAO {
         String conversationId = userIds.get(0) + "-" + userIds.get(1);
 
         reference = db.getReference().child("privateConv").child(conversationId).child("messages");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("date").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chat.clear();
