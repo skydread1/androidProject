@@ -98,7 +98,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         String date = date_time.substring(8,10)+"."+date_time.substring(5,7)+"."+date_time.substring(0,4);
         String time = date_time.substring(16,22);
 
-        //if true bubble layout right
+        //if true: bubble layout right
         if (right_or_left) {
             viewHolder.textView.setBackgroundResource(R.drawable.bubble_right);
             GradientDrawable gradientDrawable = (GradientDrawable) viewHolder.textView.getBackground().mutate();
