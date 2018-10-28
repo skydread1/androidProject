@@ -1,6 +1,5 @@
 package com.cpe.chat.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,18 +13,13 @@ import android.widget.Toast;
 
 import com.cpe.chat.R;
 import com.cpe.chat.adaptaters.UserAdapter;
-import com.cpe.chat.adaptaters.MessageAdapter;
 import com.cpe.chat.daos.ConversationDAO;
 import com.cpe.chat.daos.UserDAO;
 import com.cpe.chat.firebaseInterfaces.FirebaseCallbackCheckConversationExistence;
 import com.cpe.chat.firebaseInterfaces.FirebaseCallbackCheckUserExistence;
 import com.cpe.chat.firebaseInterfaces.FirebaseCallbackGetUsers;
-import com.cpe.chat.firebaseInterfaces.FirebaseCallbackSaveMessage;
-import com.cpe.chat.model.Message;
 import com.cpe.chat.model.UserDetails;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConversationSelectionActivity extends AppCompatActivity implements View.OnClickListener {
@@ -90,8 +84,9 @@ public class ConversationSelectionActivity extends AppCompatActivity implements 
                                 conversationdao.createConversation(userToChatId);
                             }
                             //start private messages activity
-                            Intent intent = new Intent(ConversationSelectionActivity.this, MessagePrivateActivity.class);
+                            Intent intent = new Intent(ConversationSelectionActivity.this, MessageActivity.class);
                             intent.putExtra("userToChatId",userToChatId );
+                            intent.putExtra("privateChat","private" );
                             startActivity(intent);
                         }
                     });

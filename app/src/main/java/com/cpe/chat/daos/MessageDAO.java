@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public enum MessageDAO {
     INSTANCE;
@@ -35,7 +36,7 @@ public enum MessageDAO {
     public void getAllGeneralMessages(final FirebaseCallbackGetMessage firebaseCallbackGetMessage) {
         user = mAuth.getInstance().getCurrentUser();
         chat = new ArrayList<>();
-        reference = db.getReference().child("messages");
+        reference = db.getReference().child("generalConv").child("messages");
         reference.orderByChild("date").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -136,6 +137,7 @@ public enum MessageDAO {
                 //get time and create a string for it
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat mdformat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+                mdformat.setTimeZone(TimeZone.getTimeZone("GMT"));
                 String date = mdformat.format(calendar.getTime());
 
                 //instance of message
@@ -153,7 +155,7 @@ public enum MessageDAO {
     }
 
     public void saveGeneralMessage(Message message){
-        FirebaseDatabase.getInstance().getReference().child("messages").child(message.getMessageContent()).setValue(message);
+        FirebaseDatabase.getInstance().getReference().child("generalConv").child("messages").child(message.getMessageContent()).setValue(message);
     }
 
     public void savePrivateMessage(Message message, String userToChatId){

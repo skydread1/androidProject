@@ -33,7 +33,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".activities.ConversationSelectionActivity" />
-        <activity android:name=".activities.MessagePrivateActivity"></activity>
+        <activity android:name=".activities.MessageActivity"></activity>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cpe.chat.model.Message;
 import com.cpe.chat.adaptaters.MessageAdapter;
@@ -24,12 +25,16 @@ public class MessageGeneralActivity extends AppCompatActivity implements View.On
     private EditText messageContent;
     private Button button_send_message;
     private MessageDAO messagedao = MessageDAO.INSTANCE;
+    private String chatType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+
+        chatType = getIntent().getStringExtra("privateChat");
+        Toast.makeText(this, chatType, Toast.LENGTH_SHORT).show();
 
         //Find Views
         messageContent = (EditText) findViewById(R.id.input_message);

@@ -3,6 +3,7 @@ package com.cpe.chat.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -74,8 +75,10 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.button_general_chat:
-                Intent intentMessageG = new Intent(this, MessageGeneralActivity.class);
+                Intent intentMessageG = new Intent(ProfileUserActivity.this, MessageActivity.class);
+                Log.d("intenta1", "intent ok");
                 startActivity(intentMessageG);
+                Log.d("intenta2", "start ok");
                 break;
 
             case R.id.button_private_chat:
