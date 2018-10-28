@@ -3,6 +3,8 @@ package com.cpe.chat.daos;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cpe.chat.firebaseInterfaces.FirebaseCallbackCheckUserExistence;
+import com.cpe.chat.firebaseInterfaces.FirebaseCallbackGetUsers;
 import com.cpe.chat.model.UserDetails;
 import com.cpe.chat.firebaseInterfaces.FirebaseCallbackGetUsername;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +15,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public enum UserDAO{
     INSTANCE;
@@ -21,6 +26,7 @@ public enum UserDAO{
     private DatabaseReference reference = db.getReference();
     private FirebaseUser userAuth;
     private String userName;
+    private List<UserDetails> userDetailsList;
 
     public void getUsernameFromDB(final FirebaseCallbackGetUsername firebaseCallbackGetUsername) {
         userAuth = mAuth.getInstance().getCurrentUser();
@@ -101,6 +107,64 @@ public enum UserDAO{
             return true;
         }
         return false;
+    }
+    public void getAllUser(final FirebaseCallbackGetUsers firebaseCallbackGetUsers) {
+        userAuth = mAuth.getInstance().getCurrentUser();
+        userDetailsList = new ArrayList<>();
+        reference = db.getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userDetailsList.clear();
+                Iterable<DataSnapshot> usersIDs = dataSnapshot.getChildren();
+                for(DataSnapshot item : usersIDs){
+
+                    //retrieving element one by one...
+                    String color = item.child("color").getValue(String.class);
+                    String email = item.child("email").getValue(String.class);
+                    String nickname = item.child("nickname").getValue(String.class);
+                    String uid = item.child("uid").getValue(String.class);
+                    Log.d("mama", color + email + nickname + uid);
+                    userDetailsList.add(new UserDetails(uid, email, nickname, color));
+                }
+
+                //sending the messages list to the callback to overpass the asynchronous issue
+                if(!userDetailsList.isEmpty()){
+                    firebaseCallbackGetUsers.onCallbackGetUsers(userDetailsList);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("ddd", "json retrieving failed");
+            }
+        });
+    }
+
+    public void checkUserExistence(final String userToChat, final FirebaseCallbackCheckUserExistence FirebaseCallbackCheckUserExistence){
+
+        reference = db.getReference().child("users");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String userToChatId = "unknown";
+                //get username and color
+                Iterable<DataSnapshot> usersIDs = dataSnapshot.getChildren();
+                for(DataSnapshot item : usersIDs){
+                    if(userToChat.equals(item.child("email").getValue()) || userToChat.equals(item.child("nickname").getValue())){
+                        userToChatId = item.child("uid").getValue(String.class);
+                    }
+                }
+                Log.d("emailUser", userToChatId);
+                FirebaseCallbackCheckUserExistence.onCallbackCheckUserExistence(userToChatId);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
 }

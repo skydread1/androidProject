@@ -44,9 +44,9 @@
         android:text="@string/change"
         android:textColor="#95a9ccff"
         app:layout_constraintBottom_toTopOf="@+id/logout_button"
-        app:layout_constraintEnd_toEndOf="@+id/profile_message_button"
-        app:layout_constraintStart_toStartOf="@+id/profile_message_button"
-        app:layout_constraintTop_toBottomOf="@+id/profile_message_button" />
+        app:layout_constraintEnd_toEndOf="@+id/button_general_chat"
+        app:layout_constraintStart_toStartOf="@+id/button_general_chat"
+        app:layout_constraintTop_toBottomOf="@+id/button_general_chat" />
 
     <TextView
         android:fontFamily="@font/montserrat"
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_username" />
 
     <Button
-        android:id="@+id/profile_message_button"
+        android:id="@+id/button_general_chat"
         android:layout_width="355dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
@@ -122,7 +122,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
-        android:text="Chat"
+        android:text="General Chat"
         android:textColor="#95a9ccff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,5 +130,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_change_username"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button_private_chat"
+        android:layout_width="351dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/montserrat"
+        android:text="Private Chat"
+        android:textColor="#95a9ccff"
+        app:layout_constraintBottom_toTopOf="@+id/profile_change_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_general_chat" />
 
 </android.support.constraint.ConstraintLayout>

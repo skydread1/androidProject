@@ -23,11 +23,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     // Provide a reference to the views for each data item
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public Button button_user_list;
+        public  TextView textViewUser;
 
         public ViewHolder(View v) {
             super(v);
-            button_user_list = v.findViewById(R.id.button_user_list);
+            textViewUser = v.findViewById(R.id.textViewUser);
         }
     }
 
@@ -59,11 +59,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         //if (!userDetailsList.get(i).getUid().equals(user.getUid())) {
 
             int bubble_color = Color.parseColor(userDetailsList.get(i).getColor());
-            viewHolder.button_user_list.setBackgroundColor(bubble_color);
+            viewHolder.textViewUser.setBackgroundColor(bubble_color);
 
-            viewHolder.button_user_list.setId(99+i);
-
-            viewHolder.button_user_list.setText(userDetailsList.get(i).getEmail()+ " as " + userDetailsList.get(i).getNickname());
+            viewHolder.textViewUser.setText(userDetailsList.get(i).getEmail()+ " as " + userDetailsList.get(i).getNickname());
         //}
     }
 

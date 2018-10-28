@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cpe.chat.R;
 import com.cpe.chat.daos.UserDAO;
@@ -23,7 +22,8 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
     private TextView textViewMessageText;
     private Button buttonLogout;
 
-    private Button buttonChat;
+    private Button buttonGeneralChat;
+    private Button buttonPrivateChat;
 
     private UserDAO userdao = UserDAO.INSTANCE;
 
@@ -38,16 +38,18 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
         buttonChangeInfo = (Button) findViewById(R.id.profile_change_button);
 
-        //textViewMessageText = (TextView) findViewById(R.id.profile_message_text);
-        buttonChat = (Button) findViewById(R.id.profile_message_button);
+        buttonGeneralChat = (Button) findViewById(R.id.button_general_chat);
+        buttonPrivateChat = (Button) findViewById(R.id.button_private_chat);
 
         buttonLogout = (Button) findViewById(R.id.logout_button);
 
 
         //Listeners
         buttonChangeInfo.setOnClickListener(this);
-        buttonChat.setOnClickListener(this);
+        buttonGeneralChat.setOnClickListener(this);
+        buttonPrivateChat.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
+
 
         //Display user Info
         userdao.INSTANCE.getUsernameFromDB(new FirebaseCallbackGetUsername() {
@@ -71,9 +73,14 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                 startActivity(intentProfileUpdate);
                 break;
 
-            case R.id.profile_message_button:
-                Intent intentMessage = new Intent(this, ConversationSelectionActivity.class);
-                startActivity(intentMessage);
+            case R.id.button_general_chat:
+                Intent intentMessageG = new Intent(this, MessageGeneralActivity.class);
+                startActivity(intentMessageG);
+                break;
+
+            case R.id.button_private_chat:
+                Intent intentMessageP = new Intent(this, ConversationSelectionActivity.class);
+                startActivity(intentMessageP);
                 break;
 
             case R.id.logout_button:

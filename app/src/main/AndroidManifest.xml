@@ -26,13 +26,14 @@
         </activity>
         <activity android:name=".activities.ProfileUserActivity" />
         <activity android:name=".activities.ProfileUpdateActivity" />
-        <activity android:name=".activities.MessageActivity" />
+        <activity android:name=".activities.MessageGeneralActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activities.ConversationSelectionActivity"></activity>
+        <activity android:name=".activities.ConversationSelectionActivity" />
+        <activity android:name=".activities.MessagePrivateActivity"></activity>
     </application>
 
 </manifest>
