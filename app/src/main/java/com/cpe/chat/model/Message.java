@@ -1,4 +1,4 @@
-package com.cpe.chat;
+package com.cpe.chat.model;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,13 +1,15 @@
-package com.cpe.chat;
+package com.cpe.chat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.cpe.chat.R;
+import com.cpe.chat.daos.UserDAO;
 
 public class ProfileUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     //View Object

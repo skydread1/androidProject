@@ -1,8 +1,11 @@
-package com.cpe.chat;
+package com.cpe.chat.daos;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cpe.chat.model.Message;
+import com.cpe.chat.firebaseInterfaces.FirebaseCallbackGetMessage;
+import com.cpe.chat.firebaseInterfaces.FirebaseCallbackSaveMessage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +31,7 @@ public enum MessageDAO {
     private String nickname;
     private String color;
 
-    public void getAll(final FirebaseCallbackGetMessage firebaseCallbackGetMessage) {
+    public void getAllMessages(final FirebaseCallbackGetMessage firebaseCallbackGetMessage) {
         user = mAuth.getInstance().getCurrentUser();
         chat = new ArrayList<>();
         reference = db.getReference().child("messages");

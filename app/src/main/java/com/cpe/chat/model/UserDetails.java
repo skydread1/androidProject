@@ -1,6 +1,4 @@
-package com.cpe.chat;
-
-import android.text.Editable;
+package com.cpe.chat.model;
 
 import java.util.Objects;
 

@@ -1,14 +1,16 @@
-package com.cpe.chat;
+package com.cpe.chat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cpe.chat.R;
+import com.cpe.chat.daos.UserDAO;
+import com.cpe.chat.firebaseInterfaces.FirebaseCallbackGetUsername;
 
 
 public class ProfileUserActivity extends AppCompatActivity implements View.OnClickListener {
@@ -70,7 +72,7 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.profile_message_button:
-                Intent intentMessage = new Intent(this, MessageActivity.class);
+                Intent intentMessage = new Intent(this, ConversationSelectionActivity.class);
                 startActivity(intentMessage);
                 break;
 
