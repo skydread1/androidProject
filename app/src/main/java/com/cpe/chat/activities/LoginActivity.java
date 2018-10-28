@@ -118,7 +118,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(getApplicationContext(), "Sign in success", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Sign in success", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, ProfileUserActivity.class));
 
                     } else {

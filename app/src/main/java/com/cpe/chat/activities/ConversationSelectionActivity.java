@@ -74,7 +74,7 @@ public class ConversationSelectionActivity extends AppCompatActivity implements 
                     conversationdao.checkConversationExistence(userToChatId, new FirebaseCallbackCheckConversationExistence() {
                         @Override
                         public void onCallbackCheckConversationExistence(boolean existence) {
-                            Log.d("convExistence", String.valueOf(existence));
+                           // Log.d("convExistence", String.valueOf(existence));
                             if(existence){
                                 //case 1 : a conversation already exists between the 2 users
                                 Toast.makeText(ConversationSelectionActivity.this, "retrieving conversation...", Toast.LENGTH_SHORT).show();
