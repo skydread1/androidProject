@@ -117,7 +117,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             //set content
             viewHolder.nameView_r.setText(nickname);
-            viewHolder.dateView_r.setText(date+" ,"+time+" at ");
+            viewHolder.dateView_r.setText(" at "+time+", "+date);
             viewHolder.textView.setText(messageContent);
         }else{
             // otherwise bubble layout left
